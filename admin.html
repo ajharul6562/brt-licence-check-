@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>এডমিন প্যানেল - বিআরটিএ</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <h2>এডমিন লগইন</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">লগইন করুন</button>
+        <div id="adminPanel" style="display:none;">
+            <h3>নতুন লাইসেন্স যুক্ত করুন</h3>
+            <textarea id="newLicenseData" rows="8" style="width:100%;" placeholder='JSON ফরম্যাটে তথ্য লিখুন'></textarea>
+            <button onclick="saveData()">✅ সংরক্ষণ করুন</button>
+        </div>
+        <p id="adminStatus"></p>
+    </main>
+    <script>
+        function login() {
+            const u = document.getElementById("username").value;
+            const p = document.getElementById("password").value;
+            if (u === "admin" && p === "1234") {
+                document.getElementById("adminPanel").style.display = "block";
+                document.getElementById("adminStatus").innerText = "Welcome, Admin.";
+            } else {
+                document.getElementById("adminStatus").innerText = "❌ ভুল তথ্য।";
+            }
+        }
+        function saveData() {
+            try {
+                const raw = document.getElementById("newLicenseData").value;
+                const parsed = JSON.parse(raw);
+                localStorage.setItem("licenseDB", JSON.stringify(parsed));
+                alert("✅ ডেটা সংরক্ষিত হয়েছে!");
+            } catch (e) {
+                alert("❌ সঠিক JSON ফরম্যাট নয়!");
+            }
+        }
+    </script>
+</body>
+</html>
